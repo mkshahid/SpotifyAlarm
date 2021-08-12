@@ -147,3 +147,6 @@ def get_current_time():
 @app.route('/timexx')
 def indexhtml():
     return render_template("public/index.html")
+
+if __name__ == '__main__':
+    app.run(debug=True)
