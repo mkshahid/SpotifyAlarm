@@ -24,6 +24,7 @@ from spotipy.oauth2 import SpotifyOAuth
 
 cid = "ac699f4f7bf7436380637c9e0720bc67"
 secret = "9c14670bdf2042c6a4b0e7463d4eadd2"
+redirect_uri = "http://localhost:8888/callback"
 scope = "user-read-playback-state " \
         "playlist-modify-public " \
         "playlist-modify-private " \
@@ -52,12 +53,28 @@ def basic():
             else:
                 tokensAdded = True
     if not tokensAdded:
-#        if not request.args.get('access_token'):
-#            return redirect("http://localhost:8888", code = 302)
-#        else:
-        access_token = request.args.get('access_token')
-        refresh_token = request.args.get('refresh_token')
-        db.child(id).push({"access_token": access_token, "refresh_token": refresh_token})
+        if not request.args.get('access_token'):
+            import math
+            from random import random
+
+            state = ''
+            possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+            for i in range(16):
+                state += possible[math.floor(random() * len(possible))]
+            
+            return redirect('https://accounts.spotify.com/authorize?' +
+                querystring.stringify({
+                  response_type: 'code',
+                  client_id: cid,
+                  scope: scope,
+                  redirect_uri: redirect_uri,
+                  state: state
+                }));
+        else:
+            access_token = request.args.get('access_token')
+            refresh_token = request.args.get('refresh_token')
+            db.child(id).push({"access_token": access_token, "refresh_token": refresh_token})
     devices = sp.devices()
     deviceNames = []
     deviceIds = []
