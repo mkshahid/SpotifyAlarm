@@ -52,12 +52,12 @@ def basic():
             else:
                 tokensAdded = True
     if not tokensAdded:
-        if not request.args.get('access_token'):
-            return redirect("http://localhost:8888", code = 302)
-        else:
-            access_token = request.args.get('access_token')
-            refresh_token = request.args.get('refresh_token')
-            db.child(id).push({"access_token": access_token, "refresh_token": refresh_token})
+#        if not request.args.get('access_token'):
+#            return redirect("http://localhost:8888", code = 302)
+#        else:
+        access_token = request.args.get('access_token')
+        refresh_token = request.args.get('refresh_token')
+        db.child(id).push({"access_token": access_token, "refresh_token": refresh_token})
     devices = sp.devices()
     deviceNames = []
     deviceIds = []
