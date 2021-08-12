@@ -19,12 +19,6 @@ db = firebase.database()
 
 app = Flask(__name__)
 
-import os
-
-os.environ['SPOTIPY_CLIENT_ID'] = "ac699f4f7bf7436380637c9e0720bc67"
-os.environ['SPOTIPY_CLIENT_SECRET'] = "9c14670bdf2042c6a4b0e7463d4eadd2"
-os.environ['SPOTIPY_REDIRECT_URI'] = "http://localhost:8888/callback"
-
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
