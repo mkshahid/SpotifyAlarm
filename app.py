@@ -31,6 +31,10 @@ scope = "user-read-playback-state " \
         "user-modify-playback-state " \
         "playlist-read-collaborative"
 
+@app.route('/test', methods=['GET'])
+def test():
+    return "Hello World"
+
 @app.route('/', methods=['GET', 'POST'])
 def basic():
 
