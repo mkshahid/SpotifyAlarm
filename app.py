@@ -22,9 +22,9 @@ app = Flask(__name__)
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
-cid = "ac699f4f7bf7436380637c9e0720bc67"
-secret = "9c14670bdf2042c6a4b0e7463d4eadd2"
-redirect_uri = "http://localhost:8888/callback"
+#cid = "ac699f4f7bf7436380637c9e0720bc67"
+#secret = "9c14670bdf2042c6a4b0e7463d4eadd2"
+#redirect_uri = "http://localhost:8888/callback"
 scope = "user-read-playback-state " \
         "playlist-modify-public " \
         "playlist-modify-private " \
@@ -52,30 +52,28 @@ def basic():
                 to.append(key)
             else:
                 tokensAdded = True
-    if not tokensAdded:
-        if not request.args.get('access_token'):
-            import math
-            from random import random
-
-            state = ''
-            possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-
-            for i in range(16):
-                state += possible[math.floor(random() * len(possible))]
-            print("redirecting...")
-
-            return redirect('https://accounts.spotify.com/authorize?' +
-                querystring.stringify({
-                  response_type: 'code',
-                  client_id: cid,
-                  scope: scope,
-                  redirect_uri: redirect_uri,
-                  state: state
-                }))
-        else:
-            access_token = request.args.get('access_token')
-            refresh_token = request.args.get('refresh_token')
-            db.child(id).push({"access_token": access_token, "refresh_token": refresh_token})
+#    if not tokensAdded:
+#        if not request.args.get('access_token'):
+#            import math
+#            from random import random
+#
+#            state = ''
+#            possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+#
+#            for i in range(16):
+#                state += possible[math.floor(random() * len(possible))]
+#
+#            return redirect('https://accounts.spotify.com/authorize?' +
+#                  'response_type=' + 'code' + '&' +
+#                  'client_id=' + cid + '&' +
+#                  'scope=' + scope + '&' +
+#                  'redirect_uri=' + redirect_uri + '&' +
+#                  'state=' + state
+#                )
+#        else:
+#            access_token = request.args.get('access_token')
+#            refresh_token = request.args.get('refresh_token')
+#            db.child(id).push({"access_token": access_token, "refresh_token": refresh_token})
     devices = sp.devices()
     deviceNames = []
     deviceIds = []
@@ -130,7 +128,7 @@ def basic():
                 for key in keys:
                     if ":" in key:
                         to.append(key)
-            return render_template('public/userForm.html', t=to, d=duplicate, names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
+            return render_template('userForm.html', t=to, d=duplicate, names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
         elif ':' in request.form['submit']:
             for val in to:
                 if val == request.form['submit']:
@@ -150,11 +148,11 @@ def basic():
 #                    db.child(id).remove(key)
 #            return render_template('public/userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes)
         if object is None:
-            return render_template('public/userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
-        return render_template('public/userForm.html', t=to, names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
+            return render_template('userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
+        return render_template('userForm.html', t=to, names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
     if object is None:
-        return render_template('public/userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
-    return render_template('public/userForm.html', t=to, names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
+        return render_template('userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
+    return render_template('userForm.html', t=to, names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
 
 @app.route('/time')
 def get_current_time():
