@@ -38,8 +38,8 @@ def test():
 
 @app.route('/', methods=['GET', 'POST'])
 def basic():
-#     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
-    sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id, client_secret))
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+#     sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id, client_secret))
 
     id = sp.current_user()['id']
     todo = db.child(id).get()
