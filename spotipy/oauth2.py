@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 os.environ['SPOTIPY_CLIENT_ID'] = 'ac699f4f7bf7436380637c9e0720bc67'
 os.environ['SPOTIPY_CLIENT_SECRET'] = '9c14670bdf2042c6a4b0e7463d4eadd2'
-os.environ['REDIRECT_URI'] = 'http://localhost:8888/callback'
+os.environ['REDIRECT_URI'] = 'https://spotify-alarm-login.herokuapp.com/'
 
 class SpotifyOauthError(Exception):
     """ Error during Auth Code or Implicit Grant flow """
