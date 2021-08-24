@@ -60,6 +60,7 @@ def basic():
             access_token = request.args.get('access_token')
             refresh_token = request.args.get('refresh_token')
             db.child(id).push({"access_token": access_token, "refresh_token": refresh_token})
+            sp = spotipy.Spotify(auth=access_token)
     devices = sp.devices()
     deviceNames = []
     deviceIds = []
