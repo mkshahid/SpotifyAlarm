@@ -5,12 +5,12 @@ app = Flask(__name__)
 import pyrebase
 
 config = {
-    "apiKey": "AIzaSyB7hN8Ya83Xt34nKD1U2K0AtNLQU41q1",
-    "authDomain": "spotify-alarm-b61ae.firebaseapp.com",
-    "databaseURL": "https://spotify-alarm-b61ae-default-rtdb.firebaseio.com",
-    "projectId": "spotify-alarm-b61ae",
-    "storageBucket": "spotify-alarm-b61ae.appspot.com",
-    "messagingSenderId": "820829797231"
+    "apiKey": "AIzaSyAQ6wB7-bekvZpv754lY61rSd1HRPbr2f0",
+    "authDomain": "spotify-alarm-tester.firebaseapp.com",
+    "databaseURL": "https://spotify-alarm-tester-default-rtdb.firebaseio.com/",
+    "projectId": "spotify-alarm-tester",
+    "storageBucket": "spotify-alarm-tester.appspot.com",
+    "messagingSenderId": "472309625206"
 }
 
 firebase = pyrebase.initialize_app(config)
