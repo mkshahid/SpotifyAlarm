@@ -20,11 +20,11 @@ db = firebase.database()
 app = Flask(__name__)
 
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 
-#cid = "ac699f4f7bf7436380637c9e0720bc67"
-#secret = "9c14670bdf2042c6a4b0e7463d4eadd2"
-#redirect_uri = "http://localhost:8888/callback"
+client_id = "ac699f4f7bf7436380637c9e0720bc67"
+client_secret = "9c14670bdf2042c6a4b0e7463d4eadd2"
+redirect_uri = "http://localhost:8888/callback"
 scope = "user-read-playback-state " \
         "playlist-modify-public " \
         "playlist-modify-private " \
@@ -38,7 +38,9 @@ def test():
 
 @app.route('/', methods=['GET', 'POST'])
 def basic():
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+#     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+    sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id, client_secret))
+
     id = sp.current_user()['id']
     todo = db.child(id).get()
     object = todo.val()
