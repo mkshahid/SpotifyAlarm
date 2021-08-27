@@ -57,7 +57,7 @@ def basic():
 #     if not tokensAdded:
     
     id = ''
-    if not request.args.get('access_token') && request.method != 'POST':
+    if not request.args.get('access_token') and request.method != 'POST':
         return redirect("https://spotify-alarm-login.herokuapp.com/", code = 302)
     else:
         access_token = request.args.get('access_token')
