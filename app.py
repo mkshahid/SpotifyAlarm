@@ -59,6 +59,7 @@ def basic():
     else:
         access_token = request.args.get('access_token')
         refresh_token = request.args.get('refresh_token')
+        console.log(request.get(https://api.spotify.com/v1/me).json()['id'])
         id = request.args.get('id')
         db.child(id).set({"access_token": access_token,"refresh_token": refresh_token})
     
@@ -67,8 +68,8 @@ def basic():
     headers = {
         "Authorization": "Bearer " + access_token
     }
-    console.log(requests.get(url="https://api.spotify.com/v1/me/player/devices", headers=headers).json())
-    devices = requests.get(url="https://api.spotify.com/v1/me/player/devices", headers=headers).json()
+    console.log(request.get(url="https://api.spotify.com/v1/me/player/devices", headers=headers).json())
+    devices = request.get(url="https://api.spotify.com/v1/me/player/devices", headers=headers).json()
     
 #     devices = sp.devices()
     deviceNames = []
@@ -84,7 +85,7 @@ def basic():
     currentOffset = 0
     while True:
         playlistUrl = "https://api.spotify.com/v1/me/playlists?limit=50&offset=" + str(currentOffset)
-        userPlaylists = requests.get(url=playlistUrl, headers=headers).json()
+        userPlaylists = request.get(url=playlistUrl, headers=headers).json()
         for p in userPlaylists['items']:
             userPlaylistsNames.append(p['name'])
             userPlaylistsIds.append(p['id'])
