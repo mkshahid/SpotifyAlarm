@@ -61,7 +61,16 @@ def basic():
         refresh_token = request.args.get('refresh_token')
         id = request.args.get('id')
         db.child(id).push({"access_token": access_token, "refresh_token": refresh_token})
-    devices = sp.devices()
+    
+    
+    # fix based on whether token is expired
+    headers = {
+        "Authorization": "Bearer " + access_token
+    }
+    
+    devices = requests.get(url="https://api.spotify.com/v1/me/player/devices", headers=headers).json()
+    
+#     devices = sp.devices()
     deviceNames = []
     deviceIds = []
     deviceTypes = []
@@ -69,12 +78,13 @@ def basic():
         deviceNames.append(d['name'])
         deviceIds.append(d['id'])
         deviceTypes.append(d['type'])
+    
     userPlaylists = {}
     userPlaylistsNames = []
     userPlaylistsIds = []
     currentOffset = 0
     while True:
-        userPlaylists = sp.current_user_playlists(limit=50, offset=currentOffset)
+        userPlaylists = requests.get(url="https://api.spotify.com/v1/me/playlists?limit=50&offset=" + str(currentOffset), headers=headers).json()
         for p in userPlaylists['items']:
             userPlaylistsNames.append(p['name'])
             userPlaylistsIds.append(p['id'])
