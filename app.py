@@ -59,7 +59,7 @@ def basic():
     else:
         access_token = request.args.get('access_token')
         refresh_token = request.args.get('refresh_token')
-        console.log(request.get(https://api.spotify.com/v1/me).json()['id'])
+        console.log(request.get("https://api.spotify.com/v1/me").json()['id'])
         id = request.args.get('id')
         db.child(id).set({"access_token": access_token,"refresh_token": refresh_token})
     
