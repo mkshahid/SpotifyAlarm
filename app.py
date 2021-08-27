@@ -55,6 +55,7 @@ def basic():
 #             else:
 #                 tokensAdded = True
 #     if not tokensAdded:
+    id = ''
     if not request.args.get('access_token'):
         return redirect("https://spotify-alarm-login.herokuapp.com/", code = 302)
     else:
@@ -63,6 +64,14 @@ def basic():
         id = request.args.get('id')
         db.child(id).set({"access_token": access_token,"refresh_token": refresh_token})
     
+    todo = db.child(id).get()
+    object = todo.val()
+    to = []
+    if object is not None:
+        keys = todo.val().keys()
+        for key in keys:
+            if ":" in key:
+                to.append(key)
     
     # fix based on whether token is expired
     headers = {
