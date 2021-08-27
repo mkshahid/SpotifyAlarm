@@ -67,7 +67,7 @@ def basic():
     headers = {
         "Authorization": "Bearer " + access_token
     }
-    
+    console.log(requests.get(url="https://api.spotify.com/v1/me/player/devices", headers=headers).json())
     devices = requests.get(url="https://api.spotify.com/v1/me/player/devices", headers=headers).json()
     
 #     devices = sp.devices()
@@ -83,7 +83,8 @@ def basic():
     userPlaylistsIds = []
     currentOffset = 0
     while True:
-        userPlaylists = requests.get(url="https://api.spotify.com/v1/me/playlists?limit=50&offset=" + str(currentOffset), headers=headers).json()
+        playlistUrl = "https://api.spotify.com/v1/me/playlists?limit=50&offset=" + str(currentOffset)
+        userPlaylists = requests.get(url=playlistUrl, headers=headers).json()
         for p in userPlaylists['items']:
             userPlaylistsNames.append(p['name'])
             userPlaylistsIds.append(p['id'])
