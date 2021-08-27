@@ -153,11 +153,11 @@ def basic():
 #                for key in to:
 #                    db.child(id).remove(key)
 #            return render_template('userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes)
-#         if object is None:
-#             return render_template('userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
+        if object is None:
+            return render_template('userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
         return render_template('userForm.html', t=to, names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
-#     if object is None:
-#         return render_template('userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
+    if object is None:
+        return render_template('userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
     return render_template('userForm.html', t=to, names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
 #     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 #     id = sp.current_user()['id']
