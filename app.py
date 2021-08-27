@@ -79,7 +79,6 @@ def basic():
         deviceIds.append(d['id'])
         deviceTypes.append(d['type'])
     
-    userPlaylists = {}
     userPlaylistsNames = []
     userPlaylistsIds = []
     currentOffset = 0
