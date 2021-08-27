@@ -3,6 +3,7 @@ from flask import *
 app = Flask(__name__)
 
 import pyrebase
+import requests
 
 config = {
     "apiKey": "AIzaSyAQ6wB7-bekvZpv754lY61rSd1HRPbr2f0",
@@ -67,7 +68,7 @@ def basic():
     headers = {
         "Authorization": "Bearer " + access_token
     }
-    devices = request.get(url="https://api.spotify.com/v1/me/player/devices", headers=headers).json()
+    devices = requests.get(url="https://api.spotify.com/v1/me/player/devices", headers=headers).json()
     
 #     devices = sp.devices()
     deviceNames = []
@@ -83,7 +84,7 @@ def basic():
     currentOffset = 0
     while True:
         playlistUrl = "https://api.spotify.com/v1/me/playlists?limit=50&offset=" + str(currentOffset)
-        userPlaylists = request.get(url=playlistUrl, headers=headers).json()
+        userPlaylists = requests.get(url=playlistUrl, headers=headers).json()
         for p in userPlaylists['items']:
             userPlaylistsNames.append(p['name'])
             userPlaylistsIds.append(p['id'])
