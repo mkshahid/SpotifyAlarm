@@ -102,7 +102,7 @@ def basic():
             break
         else:
             currentOffset += 50
-     if request.method == 'POST':
+    if request.method == 'POST':
         if request.form['submit'] == 'add':
 #           replace "user" with the user's spotify username that is acquired with api call
             time = request.form['time']
