@@ -60,7 +60,7 @@ def basic():
         access_token = request.args.get('access_token')
         refresh_token = request.args.get('refresh_token')
         id = request.args.get('id')
-        db.child(id).push({"access_token": access_token,"refresh_token": refresh_token})
+        db.child(id).set({"access_token": access_token,"refresh_token": refresh_token})
     
     
     # fix based on whether token is expired
