@@ -57,7 +57,7 @@ def basic():
 #     if not tokensAdded:
     
     id = ''
-    if not request.args.get('access_token') and request.method != 'POST':
+    if not request.args.get('access_token') or request.method != 'POST':
         return redirect("https://spotify-alarm-login.herokuapp.com/", code = 302)
     else:
         access_token = request.args.get('access_token')
@@ -73,6 +73,35 @@ def basic():
         for key in keys:
             if ":" in key:
                 to.append(key)
+    
+    # fix based on whether token is expired
+        headers = {
+            "Authorization": "Bearer " + access_token
+        }
+        devices = requests.get(url="https://api.spotify.com/v1/me/player/devices", headers=headers).json()
+
+    #     devices = sp.devices()
+        deviceNames = []
+        deviceIds = []
+        deviceTypes = []
+        for d in devices['devices']:
+            deviceNames.append(d['name'])
+            deviceIds.append(d['id'])
+            deviceTypes.append(d['type'])
+
+        userPlaylistsNames = []
+        userPlaylistsIds = []
+        currentOffset = 0
+        while True:
+            playlistUrl = "https://api.spotify.com/v1/me/playlists?limit=50&offset=" + str(currentOffset)
+            userPlaylists = requests.get(url=playlistUrl, headers=headers).json()
+            for p in userPlaylists['items']:
+                userPlaylistsNames.append(p['name'])
+                userPlaylistsIds.append(p['id'])
+            if len(userPlaylists['items']) < 50:
+                break
+            else:
+                currentOffset += 50
     
     if request.method == 'POST':
         if request.form['submit'] == 'add':
@@ -129,35 +158,7 @@ def basic():
         if object is None:
             return render_template('userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
         return render_template('userForm.html', t=to, names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
-    else:
-        # fix based on whether token is expired
-        headers = {
-            "Authorization": "Bearer " + access_token
-        }
-        devices = requests.get(url="https://api.spotify.com/v1/me/player/devices", headers=headers).json()
-
-    #     devices = sp.devices()
-        deviceNames = []
-        deviceIds = []
-        deviceTypes = []
-        for d in devices['devices']:
-            deviceNames.append(d['name'])
-            deviceIds.append(d['id'])
-            deviceTypes.append(d['type'])
-
-        userPlaylistsNames = []
-        userPlaylistsIds = []
-        currentOffset = 0
-        while True:
-            playlistUrl = "https://api.spotify.com/v1/me/playlists?limit=50&offset=" + str(currentOffset)
-            userPlaylists = requests.get(url=playlistUrl, headers=headers).json()
-            for p in userPlaylists['items']:
-                userPlaylistsNames.append(p['name'])
-                userPlaylistsIds.append(p['id'])
-            if len(userPlaylists['items']) < 50:
-                break
-            else:
-                currentOffset += 50
+   
     if object is None:
         return render_template('userForm.html', names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
     return render_template('userForm.html', t=to, names=deviceNames, ids=deviceIds, types=deviceTypes, pName=userPlaylistsNames, pId=userPlaylistsIds)
