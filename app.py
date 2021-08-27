@@ -41,26 +41,26 @@ def basic():
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 #     sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id, client_secret))
 
-    id = sp.current_user()['id']
-    todo = db.child(id).get()
-    object = todo.val()
-    tokensAdded = False
-    to = []
-    if object is not None:
-        keys = todo.val().keys()
-        for key in keys:
-            if ":" in key:
-                to.append(key)
-            else:
-                tokensAdded = True
-    if not tokensAdded:
-        if not request.args.get('access_token'):
-            return redirect("https://spotify-alarm-login.herokuapp.com/", code = 302)
-        else:
-            access_token = request.args.get('access_token')
-            refresh_token = request.args.get('refresh_token')
-            id = request.args.get('id')
-            db.child(id).push({"access_token": access_token, "refresh_token": refresh_token, "id": id})
+#     id = sp.current_user()['id']
+#     todo = db.child(id).get()
+#     object = todo.val()
+#     tokensAdded = False
+#     to = []
+#     if object is not None:
+#         keys = todo.val().keys()
+#         for key in keys:
+#             if ":" in key:
+#                 to.append(key)
+#             else:
+#                 tokensAdded = True
+#     if not tokensAdded:
+    if not request.args.get('access_token'):
+        return redirect("https://spotify-alarm-login.herokuapp.com/", code = 302)
+    else:
+        access_token = request.args.get('access_token')
+        refresh_token = request.args.get('refresh_token')
+        id = request.args.get('id')
+        db.child(id).push({"access_token": access_token, "refresh_token": refresh_token, "id": id})
     devices = sp.devices()
     deviceNames = []
     deviceIds = []
