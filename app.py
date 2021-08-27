@@ -74,6 +74,7 @@ def basic():
     deviceNames = []
     deviceIds = []
     deviceTypes = []
+    return devices
     for d in devices['devices']:
         deviceNames.append(d['name'])
         deviceIds.append(d['id'])
